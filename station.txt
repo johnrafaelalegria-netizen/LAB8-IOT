@@ -1,0 +1,41 @@
+Station number:D22105,Pi model: rasberry 5, boot-drive label: mmcblk0p2 names: Huu Dat Huynh; John-Rafael Alegria
+
+
+
+Exit Ticket
+1. Name the one input capability the ESP32 has that the Pi lacks, and the architecture role each machine plays because of it.
+
+One input capability the ESP32 has that the Pi lacks is built in ADC for analog input, the Pi only posesses digital GPIOs.
+This affects their architecture role, because the ESP32 acts as a real-time microc controller, which is able to read continuous analog signal,
+while the Pi acts as a computer, which manages the micro controllers and the data they provide.
+
+2. A 12-bit ADC on 3.3 V: step size, shown with the formula.
+
+Formula:
+V Ref = 3.3V
+N = 12 bits
+Step Size = Vref/2^N
+3.3/2^12=0.806mV
+
+3. In our divider, which way does the GPIO34 voltage move when a cloud passes, and why?
+
+When a cloud passes, light levels drop causing the light resistor to increase. 
+Formula:
+VGPIO34 = 3.3V * R/Rlight + R
+So as the light resistor ioncreases due to the darkness, the light resistor value grows, which causes the voltage
+at GPIO34 to decrease
+
+4. Why does pwm.duty\_u16(adc.read\_u16()) need no scaling?
+
+In MicroPython adc.read_u16() automatically scales the hardware 12bit to a standard 16 bit integer range.
+since pwm.duty_u16() expects a 16 bit integer data range it doesn't need to be scaled since adc.read_u16 is already 
+set to that range.
+
+5. Open loop versus closed loop, one sentence each, and which one A2 requires.
+
+An open loop control is a control system where we measure data without measuring or feeding back the resulting output to make adjustments,
+while a closed loop control is a control system where we we measure continuously measure the output state and uses a sensor to compare it
+to a target point and adjusts its controls to match the output state with the target state.
+A2 requires an open loop control since the data measured such light levels will be 
+mapped to output PWM cycles without needing feedback to act upon. Meaning there is no target state
+to compare it to.
